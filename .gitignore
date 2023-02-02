@@ -1,0 +1,9 @@
+tts/
+model.pth
+*mp3
+*mp4
+Command_for_GIT.txt
+models/
+Bot_Mykola/venv/
+Bot_Mykola/.idea/
+.idea/
