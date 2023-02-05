@@ -1,6 +1,6 @@
 from aiogram import Bot, types
 
-from main import bot, dp
+from Bot_Mykola.handlers.create_bot import *
 
 
 '''CLIENT'''

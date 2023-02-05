@@ -1,6 +1,7 @@
 from aiogram.utils import executor
 from handlers.client import *
 from handlers.create_bot import dp
+from keyboard.body import *
 # from SQLite.sqlite import db_start
 # from keyboard.body import register_all_func_handler
 

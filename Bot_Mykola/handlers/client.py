@@ -3,12 +3,12 @@ from aiogram import types
 from aiogram.dispatcher import Dispatcher
 from time import time, ctime
 
-from handlers.create_bot import bot
-from keyboard.body import *
+from Bot_Mykola.handlers.create_bot import bot
+from Bot_Mykola.keyboard.body import *
 
 
 async def take_audio(message: types.audio):
-    if isinstance(message.content_type. types.ContentType.VOICE):
+    if message.content_type == types.ContentType.VOICE:
         file_id = message.voice.file_id
     else:
         await message.reply("Формат документа не підтримується")
