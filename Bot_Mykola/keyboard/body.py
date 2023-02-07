@@ -1,5 +1,6 @@
 from time import ctime, time
 # from SQLite.sqlite import db_start, create_profile, edit_profile
+from Bot_Mykola.SQLite.base import db_start, create_profile
 from aiogram import types, Dispatcher
 from Bot_Mykola.handlers.create_bot import dp
 from .kb_init import *
@@ -7,6 +8,7 @@ from .kb_init import *
 
 @dp.message_handler(commands='start')
 async def greeting(message: types.Message):
+    await create_profile(message.from_user.username)
     await message.reply(f'Привіт, {message.from_user.full_name}, я голосовий помічник Микола, буду радий допомогти',
                         reply_markup=default_key_board_client)
     print(f'/start or /help : {ctime(time())}')
