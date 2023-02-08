@@ -1,6 +1,6 @@
 from aiogram.utils import executor
 from handlers.client import *
-from handlers.create_bot import dp
+# from handlers.create_bot import dp
 from keyboard.body import *
 from SQLite.base import db_start
 # from keyboard.body import register_all_func_handler
@@ -16,6 +16,7 @@ async def on_start(_):
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True, on_startup=on_start)
+
 
 
 
