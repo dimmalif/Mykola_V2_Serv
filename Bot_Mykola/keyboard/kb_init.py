@@ -1,7 +1,17 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
 
-# Перша сторінка
+# Нульова сторінка
 
+registration = KeyboardButton('Реєстрація👨🏼‍')
+skip_reg = KeyboardButton('Пропустити')
+
+null_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
+null_keyboard.row(registration, skip_reg)
+
+city_name = KeyboardButton('Відправити назву населеного пункту')
+location = KeyboardButton('Відправити геолокацію')
+
+# Перша сторінка
 help_button = KeyboardButton('Допомога🆘')
 all_func = KeyboardButton('Функції' + '🤖')
 info_from_Mykola = KeyboardButton('Про Колю🚹')
@@ -13,7 +23,7 @@ default_key_board_client.add(all_func).row(help_button, info_from_Mykola).add(re
 # Друга сторінка
 multimedia = KeyboardButton('Мультимедія📼')
 rec_films = KeyboardButton('Рекомендація фільму🎬')
-get_weather = KeyboardButton('Погода⛅')
+get_weather = KeyboardButton('Погода')
 jock = KeyboardButton('Розваги🎭')
 kurs = KeyboardButton('Курс валют💸')
 back_to_start = KeyboardButton('🔣')

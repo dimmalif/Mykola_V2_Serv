@@ -1,44 +1,52 @@
 import sqlite3 as sq
 
-audio_command = 'derix035.wav'
-
-def convert_to_binary_data(filename):
-    # Преобразование данных в двоичный формат
-    with open(filename, 'rb') as file:
-        blob_data = file.read()
-    return blob_data
-
 
 async def db_start():
 
     db = sq.connect('user.db')
     curs = db.cursor()
-    curs.execute("CREATE TABLE IF NOT EXISTS profile(full_name, user_id TEXT PRIMARY KEY, audio_command BLOB, comands TEXT)")
+    curs.execute("CREATE TABLE IF NOT EXISTS profile(user_id PRIMARY KEY, full_name NOT NULL, username TEXT, city TEXT, last_date TEXT)")
     db.commit()
     db.close()
 
 
-async def create_profile(full_name, user_id):
+async def create_profile(user_id, full_name, username):
     db = sq.connect('user.db')
     curs = db.cursor()
-    user = curs.execute('SELECT 1 FROM profile WHERE user_id == "{key}"'.format(key=user_id)).fetchall()
+    user = curs.execute('SELECT 1 FROM profile WHERE username == "{key}"'.format(key=username)).fetchall()
     if not user:
-        curs.execute('INSERT INTO profile VALUES(?, ?, ?)', (full_name, user_id, ''))
+        curs.execute('INSERT INTO profile VALUES(?, ?, ?, ?, ?)', (user_id, full_name, username, '', ''))
         db.commit()
     db.close()
 
 
-def insert_blob(full_name, name, audio_command):
-    sqlite_connection = sq.connect('user.db')
-    cursor = sqlite_connection.cursor()
+def lust_time(user_id, time):
+    db = sq.connect('user.db')
+    curs = db.cursor()
 
-    sqlite_insert_blob_query = """INSERT OR REPLACE INTO profile
-                              (full_name, user_id, audio_command) VALUES (?, ?, ?)"""
+    sqlite_insert_time = """INSERT OR REPLACE INTO profile
+                              (user_id, time) VALUES (?, ?)"""
+    data_tuple = (user_id, time)
 
-    audio = convert_to_binary_data(audio_command)
+    curs.execute(sqlite_insert_time, data_tuple)
+    db.commit()
+    db.close()
 
-    data_tuple = (full_name, name, audio)
-    cursor.execute(sqlite_insert_blob_query, data_tuple)
-    sqlite_connection.commit()
-    sqlite_connection.close()
+
+def add_city(user_id, position):
+    db = sq.connect('user.db')
+    curs = db.cursor()
+    curs.execute(f"UPDATE profile SET city = '{position}' WHERE user_id LIKE {user_id}")
+    db.commit()
+    db.close()
+
+
+def get_city(user_id):
+    db = sq.connect('user.db')
+    curs = db.cursor()
+    city = curs.execute('SELECT 1 FROM profile WHERE username == "{key}"'.format(key=user_id)).fetchall()
+    db.commit()
+    print(city)
+    db.close()
+    return city
 

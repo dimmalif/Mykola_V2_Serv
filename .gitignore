@@ -9,4 +9,6 @@ Bot_Mykola/.idea/
 .idea/
 *.wav
 __pycache__/
+*.webm.part
+*mp4.part
 
