@@ -1,3 +1,4 @@
+import os
 import re
 from pathlib import Path
 from aiogram.utils import exceptions
@@ -22,7 +23,7 @@ async def take_audio(message: types.audio):
     if message.content_type == types.ContentType.VOICE:
         file_id = message.voice.file_id
     else:
-        await message.reply("Формат документа не підтримується")
+        await message.reply("Формат файлу не підтримується🙁")
         return 0
 
     file = await bot.get_file(file_id)
@@ -41,17 +42,12 @@ async def take_audio(message: types.audio):
 
     parameters = vectoring(text)
     print(f'Download new file at: {ctime(time())}')
-    # try:
-    await message.reply('Обробляю Ваш запит,це може зайняти деякий час')
-    # await message.reply('Починаю завантаження вказаного файла,це займе деякий час.\n'
-    #                     'Для більш точного завантаження рекомендується користуватись клавіатурою')
     result_func = eval(parameters[0] + '(text)')
     if '/home' in result_func:
         await message.reply_document(open(f'{result_func}', 'rb'))
+
     else:
         await message.reply(result_func)
-    # except TypeError:
-    #     pass
 
 
 def handler_registers_client(dp: Dispatcher):

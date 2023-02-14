@@ -1,5 +1,4 @@
 from Skills.BFunction import BFunction
-
 import fileinput
 import os
 import re
@@ -24,7 +23,7 @@ class Search_music(BFunction):
         self.to_open = None
         self.top_result = None
         self.all_links = []
-        self.request = self.request[1]
+
         # self.request = 'червона рута'
         self.options = {'keepvideo': False}
 
@@ -47,36 +46,30 @@ class Search_music(BFunction):
 
     def search_top_result(self):
         yt = YTMusic()
-        search_results = yt.search(self.request, filter='videos')
+        search_results = yt.search(self.request[1])
+        print(self.request)
+        print(f"{search_results} - результат пошуку")
         result = search_results
         print(result)
         self.top_result = f'https://music.youtube.com/watch?v={result[0]["videoId"]}'
-        print(self.top_result)
-        return self.top_result
 
-    # def browser_open(self):
-    #     webbrowser.open(self.to_open)
+        return self.top_result
 
 
 # 1)перевести перевірку та реформатування у окремий клас 2) оптимізувати клас(постійно прописується схожий код)
 class Downloader_music(Search_music):
-    def __init__(self, requests):
+    def __init__(self, requests=None):
         super().__init__(requests)
         self.not_found_file = None
         self.file_list = []
         self.name = []
-        self.VIDEO_FILE_PATH = "/home/dmytro/Desktop/Mykola/Mykola_V2_Serv/Bot_Mykola"
-        self.AUDIO_FILE_PATH = "/home/dmytro/Desktop/Mykola/Mykola_V2_Serv/Skills/downloader_music/mp3_files"
+        self.VIDEO_FILE_PATH = "/home/dmytro/Desktop/Mykola/Bot_Mykola"
+        self.AUDIO_FILE_PATH = "/home/dmytro/Desktop/Mykola/Skills/downloader_music/mp3_files"
 
     def download_first_albums(self):
         self.search_music_albums()
 
         self.video_info = youtube_dl.YoutubeDL().extract_info(url=self.to_open, download=False)
-        print(self.video_info)
-
-        # if not self.check_file():
-        #     self.renamed_downloads_file()
-        #     return 0
 
         with youtube_dl.YoutubeDL(self.options) as ydl:
             ydl.download([self.video_info['webpage_url']])
@@ -86,15 +79,11 @@ class Downloader_music(Search_music):
         self.search_music_albums()
         # self.check_file()
         for i in self.all_links:
-            # print(f"'Download albums:'{}") НЕ В ТОПКУ!
             self.video_info = youtube_dl.YoutubeDL().extract_info(url=i, download=True)
-            # with youtube_dl.YoutubeDL(self.options) as ydl:
-            #     ydl.download([self.video_info['webpage_url']])
         self.renamed_downloads_file()
 
     def download__first_music(self):
         self.search_top_result()
-        print(self.request)
         self.video_info = youtube_dl.YoutubeDL().extract_info(url=self.top_result, download=False)
         if self.video_info['duration'] > 1200:
             return 'Бажаний для завантаження файл більше двадцяти хвилин.\n' \
@@ -110,10 +99,11 @@ class Downloader_music(Search_music):
         self.delete_mp4()
         return path_file
 
-    def renamed_downloads_file(self):
+    def renamed_downloads_file(self, user_id=None):
+        if user_id:
+            self.name = [user_id]
         # print(self.name)
         for i in range(len(self.name)):
-
             print('start rename')
             video_path = f"{self.VIDEO_FILE_PATH}/{self.name[i]}.mp4"
             self.audio_path = f"{self.AUDIO_FILE_PATH}/{self.name[i]}.mp3"
@@ -137,5 +127,5 @@ class Downloader_music(Search_music):
 # s = Search_music('коля включи пісню червона рута')
 # s.search_top_result()
 
-# d = Downloader_music('коля включи пісню червона рута')
+# d = Downloader_music('оля скечей пісню гимн панков')
 # d.download__first_music()

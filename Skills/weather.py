@@ -59,5 +59,7 @@ class Weather:
         result = ''
         for d in data:
             for key, value in d.items():
-                result += "{0}: {1}\n\n".format(key, value)
+                result += f"{key}: {value}\n"
+                if key == 'Швидкість вітру':
+                    result += '\n'
         return result

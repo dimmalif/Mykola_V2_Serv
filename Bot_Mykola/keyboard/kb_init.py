@@ -32,14 +32,13 @@ all_func_key_board_client = ReplyKeyboardMarkup(resize_keyboard=True)
 all_func_key_board_client.row(multimedia, rec_films).row(get_weather, kurs).add(jock).row(back_to_start)
 
 # Третя сторінка для мультимедії
-search_music = KeyboardButton('Пошук музики для скачування🎼')
-get_music = KeyboardButton('Завантаження музики📲')
-convert = KeyboardButton('Конвертація відео в звук🛠')
+get_music = KeyboardButton('Завантаження вказаної пісні📲')
+convert = KeyboardButton('Конвертація відео (mp4) в звук🛠')
 back_to_all_func = KeyboardButton('◀️') # Назад
 
 
 multimedia_func = ReplyKeyboardMarkup(resize_keyboard=True)
-multimedia_func.row(search_music, get_music).add(convert).row(back_to_all_func, back_to_start)
+multimedia_func.row(get_music).add(convert).row(back_to_all_func, back_to_start)
 
 # Третя сторінка для розваг
 fackt = KeyboardButton('Цікавий факт⁉️')
