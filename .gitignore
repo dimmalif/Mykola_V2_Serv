@@ -1,0 +1,14 @@
+tts/
+model.pth
+*mp3
+*mp4
+Command_for_GIT.txt
+model/
+Bot_Mykola/venv/
+Bot_Mykola/.idea/
+.idea/
+*.wav
+__pycache__/
+*.webm.part
+*mp4.part
+
